@@ -1,5 +1,5 @@
 
-const API_BASE_URL = 'http://127.0.0.1:5000';
+const API_BASE_URL = 'https://inventory-backend-production-8bf4.up.railway.app';
 
 export interface BackendInventoryItem {
   item_id: string;
