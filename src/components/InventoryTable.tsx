@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
 import { BackendInventoryItem } from '@/services/apiService';
+import { apiService } from '@/services/apiService';
 
 interface InventoryTableProps {
   items: BackendInventoryItem[];
@@ -35,12 +35,36 @@ export const InventoryTable = ({ items }: InventoryTableProps) => {
   return (
     <div className="bg-card rounded-lg shadow-sm border overflow-hidden">
       <div className="p-4 border-b bg-muted/50">
-        <h2 className="text-xl font-semibold">Scanned Products</h2>
-        <p className="text-sm text-muted-foreground mt-1">
-          Showing {items.length} scanned product{items.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div>
+            <h2 className="text-xl font-semibold">Scanned Products</h2>
+            <p className="text-sm text-muted-foreground mt-1">
+              Showing {items.length} scanned product{items.length !== 1 ? 's' : ''}
+            </p>
+          </div>
+
+          {items.length > 0 && (
+            <div className="flex gap-2">
+              <button
+                onClick={apiService.downloadExcel}
+                className="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-md transition-colors"
+              >
+                Download Excel
+              </button>
+
+              <button
+                onClick={() => {
+                  apiService.deleteUploaded().then(() => window.location.reload());
+                }}
+                className="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-md"
+              >
+                Delete Inventory
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-muted/30">
@@ -56,9 +80,9 @@ export const InventoryTable = ({ items }: InventoryTableProps) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr 
-                key={item.item_id} 
+            {items.map((item) => (
+              <tr
+                key={item.item_id}
                 className={`border-t hover:bg-muted/20 transition-colors ${getRowClass(item.variance)}`}
               >
                 <td className="p-4">
@@ -71,27 +95,20 @@ export const InventoryTable = ({ items }: InventoryTableProps) => {
                 </td>
                 <td className="p-4 font-mono font-medium">{item.item_id}</td>
                 <td className="p-4 font-medium">{item.product_name}</td>
-                <td className="p-4 text-right font-medium">
-                  {item.expected_qty}
-                </td>
-                <td className="p-4 text-right font-medium">
-                  {item.scanned_qty}
-                </td>
+                <td className="p-4 text-right font-medium">{item.expected_qty}</td>
+                <td className="p-4 text-right font-medium">{item.scanned_qty}</td>
                 <td className={`p-4 text-right font-medium ${getVarianceColor(item.variance)}`}>
-                  {item.variance > 0 ? '+' : ''}{item.variance}
+                  {item.variance > 0 ? '+' : ''}
+                  {item.variance}
                 </td>
-                <td className="p-4 text-right font-medium">
-                  ${item.item_price.toFixed(2)}
-                </td>
-                <td className="p-4 text-right font-medium">
-                  ${item.total_price.toFixed(2)}
-                </td>
+                <td className="p-4 text-right font-medium">${item.item_price.toFixed(2)}</td>
+                <td className="p-4 text-right font-medium">${item.total_price.toFixed(2)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      
+
       {items.length === 0 && (
         <div className="p-8 text-center text-muted-foreground">
           <p>No scanned products yet. Start scanning items to see results here.</p>
