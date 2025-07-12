@@ -75,8 +75,8 @@ export const InventoryTable = ({ items }: InventoryTableProps) => {
               <th className="text-right p-4 font-semibold">Expected Qty</th>
               <th className="text-right p-4 font-semibold">Scanned Qty</th>
               <th className="text-right p-4 font-semibold">Variance</th>
-              <th className="text-right p-4 font-semibold">Item Price</th>
-              <th className="text-right p-4 font-semibold">Total Value</th>
+              <th className="text-right p-4 font-semibold">Product Cost</th>
+              <th className="text-right p-4 font-semibold">Selling Price</th>
             </tr>
           </thead>
           <tbody>
@@ -102,7 +102,9 @@ export const InventoryTable = ({ items }: InventoryTableProps) => {
                   {item.variance}
                 </td>
                 <td className="p-4 text-right font-medium">${item.item_price.toFixed(2)}</td>
-                <td className="p-4 text-right font-medium">${item.total_price.toFixed(2)}</td>
+                <td className="p-4 text-right font-medium">
+                  {item.selling_price !== undefined ? `$${item.selling_price.toFixed(2)}` : 'N/A'}
+                </td>
               </tr>
             ))}
           </tbody>
