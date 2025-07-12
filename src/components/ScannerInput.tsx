@@ -28,6 +28,7 @@ export const ScannerInput = ({ onItemScanned, inventoryData, allItems = [] }: Sc
     itemId: string;
     productName: string;
     expectedQty: number;
+    sellingPrice: number;
   } | null>(null);
   const itemIdRef = useRef<HTMLInputElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -110,7 +111,8 @@ export const ScannerInput = ({ onItemScanned, inventoryData, allItems = [] }: Sc
     setScannedProduct({
       itemId: upperCaseItemId,
       expectedQty,
-      productName
+      productName,
+      sellingPrice: matchedItem?.selling_price ?? 0,
     });
   };
 
@@ -164,6 +166,7 @@ export const ScannerInput = ({ onItemScanned, inventoryData, allItems = [] }: Sc
         itemId={scannedProduct.itemId}
         expectedQty={scannedProduct.expectedQty}
         productName={scannedProduct.productName}
+        sellingPrice={scannedProduct.sellingPrice}
         onConfirm={handleConfirm}
         onCancel={handleCancel}
       />
