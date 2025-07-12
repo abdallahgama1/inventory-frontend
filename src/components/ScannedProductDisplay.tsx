@@ -10,6 +10,7 @@ interface ScannedProductDisplayProps {
   itemId: string;
   productName: string;
   expectedQty: number;
+  sellingPrice?: number;
   onConfirm: (quantity: number) => void;
   onCancel: () => void;
 }
@@ -18,6 +19,7 @@ export const ScannedProductDisplay = ({
   itemId, 
   productName,
   expectedQty, 
+  sellingPrice,
   onConfirm, 
   onCancel 
 }: ScannedProductDisplayProps) => {
