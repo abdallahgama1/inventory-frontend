@@ -8,6 +8,7 @@ export interface BackendInventoryItem {
   scanned_qty: number;
   variance: number;
   total_price: number;
+  selling_price: number;
   expected_total_price: number;
 }
 
