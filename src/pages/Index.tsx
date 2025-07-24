@@ -59,7 +59,7 @@ const Index = () => {
       setAllItems(backendItems);
       
       // Filter to show only scanned products (scanned_qty > 0)
-      const scannedOnlyItems = backendItems.filter(item => item.scanned_qty > 0);
+      const scannedOnlyItems = backendItems;
       setScannedItems(scannedOnlyItems);
       
       // Check if we have any data to determine if file is uploaded
